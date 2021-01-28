@@ -3,12 +3,20 @@
 class Burger
 {
 
-    public function getUserByEmail($email)
+    public function getUserByEmail()
     {
-        $db = Db::getInstance();
-        $query = "SELECT * FROM users WHERE email = :email";
-        $db->fetchOne($query, __METHOD__, [
-            ":email" => $email
-        ]);
+
+    }
+
+    public function createUser()
+    {
+    }
+
+    public function incOrders($id)
+    {
+    }
+
+    public function addOrder($id)
+    {
     }
 }
