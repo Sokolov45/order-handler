@@ -13,24 +13,26 @@ $fields = ['street', 'home'];
 $address = '';
 foreach ($_POST as $item => $value) {
     if ($value && in_array($item, $fields)) {
-        $address .= $value;
+        $address .= $value . " ";
     }
 }
 
 $burger = new Burger();
-$user = $burger->getUserByEmail();
+$user = $burger->getUserByEmail($email);
 if ($user) {
-     $burger->incOrders($user['id']);
-    $ordersCount = $user['ordersCount'] + 1;
+    $userId = $user['id'];
+    $burger->incOrders($userId);
+    $ordersCount = $user['orders_count'] + 1;
 }else {
-    $orderNumber = 1;
-    $user = $burger->createUser();
-
+    $ordersCount = 1;
+    $userId = $burger->createUser($name, $email);
 }
 
-$orderNumber = $burger->addOrder($user['id']);
+$orderNumber = $burger->addOrder($userId, $address);
 
 echo "Ваш заказ получен, он будет доставлен по адрессу $address<br>
 Номер ващего заказа $orderNumber.<br>
 Это ваш $ordersCount-ый заказ.";
 
+$db = Db::getInstance();
+$db->getLogs();
